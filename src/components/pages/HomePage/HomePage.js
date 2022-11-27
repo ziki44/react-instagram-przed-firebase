@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 
-import Header from 'components/sections/Header/Header';
 import MessagesList from 'components/sections/MessagesList/MessagesList';
 import WelcomeMessage from 'components/sections/WelcomeMessage/WelcomeMessage';
+import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
 
 import {
   removeMessage,
   getMessages
 } from 'helpers/http';
-import Footer from 'components/sections/Footer/Footer';
 
 function HomePage() {
   const [messages, setMessages] = useState([]);
@@ -30,8 +29,7 @@ function HomePage() {
   }
 
   return (
-    <div>
-      <Header logo="Instagram App"/>
+    <MainTemplate>
       <WelcomeMessage>
         <h3>Messages List</h3>
       </WelcomeMessage>
@@ -39,8 +37,7 @@ function HomePage() {
         messages={messages}
         handleMessageRemove={handleMessageRemove}
       />
-      <Footer />
-    </div>
+    </MainTemplate>
   );
 }
 

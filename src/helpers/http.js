@@ -33,3 +33,18 @@ export const editMessage = (id, messageToEdit) => {
     body: JSON.stringify(messageToEdit)
   })
 }
+
+export const loginUser = (email) => {
+  return  fetch(`http://localhost:5000/users?email=${email}`)
+  .then(res => res.json())
+}
+
+export const registerPage = (newUser) => {
+   return fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+}

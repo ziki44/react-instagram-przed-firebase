@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LoginRegisterForm from "components/sections/LoginRegisterForm/LoginRegisterForm";
-import Footer from "components/sections/Footer/Footer"
-import Header from "components/sections/Header/Header"
 import WelcomeMessage from "components/sections/WelcomeMessage/WelcomeMessage"
+import { loginUser } from '../../../helpers/http.js'
+import MainTemplate from "components/templates/MainTemplate/MainTemplate.js";
 
 function LoginPage() {
   const [emailInputValue, setEmailInputValue] = useState('');
@@ -46,18 +46,30 @@ function LoginPage() {
     //   })
 
     // moge skorzystac z queryparams zeby wyszukac konkretnego uzytkownika
-    fetch(`http://localhost:5000/users?email=${emailInputValue}`)
-      .then(res => res.json())
-      .then((users) => {
-        // to bedzie pierwszy element tablicy
-        const currentUser = users[0];
+    loginUser(emailInputValue)
+    .then((users) => {
+      // to bedzie pierwszy element tablicy
+      const currentUser = users[0];
 
-        if(currentUser && currentUser.password === passwordInputValue) {
-          navigate('/')
-        } else {
-          setIsLoginError(true);
-        }
-      })
+      if(currentUser && currentUser.password === passwordInputValue) {
+        navigate('/')
+      } else {
+        setIsLoginError(true);
+      }
+    })
+
+    // fetch(`http://localhost:5000/users?email=${emailInputValue}`)
+    //   .then(res => res.json())
+    //   .then((users) => {
+    //     // to bedzie pierwszy element tablicy
+    //     const currentUser = users[0];
+
+    //     if(currentUser && currentUser.password === passwordInputValue) {
+    //       navigate('/')
+    //     } else {
+    //       setIsLoginError(true);
+    //     }
+    //   })
 
   }
 
@@ -70,8 +82,7 @@ function LoginPage() {
   }
 
   return (
-    <div>
-      <Header />
+    <MainTemplate>
       <WelcomeMessage>
         <h3>Login Page</h3>
       </WelcomeMessage>
@@ -87,9 +98,7 @@ function LoginPage() {
         submitText="Login"
         isLoginError={isLoginError}
       />
-
-      <Footer />
-    </div>
+    </MainTemplate>
   )
 }
 

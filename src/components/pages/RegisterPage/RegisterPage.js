@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-import Footer from "components/sections/Footer/Footer"
-import Header from "components/sections/Header/Header"
 import WelcomeMessage from "components/sections/WelcomeMessage/WelcomeMessage"
 import LoginRegisterForm from "components/sections/LoginRegisterForm/LoginRegisterForm";
+import MainTemplate from "components/templates/MainTemplate/MainTemplate.js";
+import { registerPage } from '../../../helpers/http.js'
 
 function RegisterPage() {
   const [emailInputValue, setEmailInputValue] = useState('');
@@ -41,16 +41,21 @@ function RegisterPage() {
       avatar: ''
     }
 
-    fetch('http://localhost:5000/users', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(newUser)
-    })
+    registerPage(newUser)
     .then(() => {
       navigate('/')
     })
+
+    // fetch('http://localhost:5000/users', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify(newUser)
+    // })
+    // .then(() => {
+    //   navigate('/')
+    // })
 
   }
 
@@ -63,8 +68,7 @@ function RegisterPage() {
   }
 
   return (
-    <div>
-      <Header />
+    <MainTemplate>
       <WelcomeMessage>
         <h3>Register Page</h3>
       </WelcomeMessage>
@@ -78,8 +82,7 @@ function RegisterPage() {
         isPasswordInputError={isPasswordInputError}
         submitText="Register"
       />
-      <Footer />
-    </div>
+    </MainTemplate>
   )
 }
 
